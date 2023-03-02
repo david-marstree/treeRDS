@@ -50,7 +50,7 @@ const disconnect = async (conn) => {
 const createDatabase = async (conn, databaseName) => {
     try {
         // created database if it is not exists
-        const [rows, fields] = await conn.execute(`CREATE DATABASE IF NOT EXISTS \`company-${databaseName}\` CHARACTER SET utf8 COLLATE utf8_general_ci;`);
+        const [rows, fields] = await conn.execute(`CREATE DATABASE IF NOT EXISTS \`${databaseName}\` CHARACTER SET utf8 COLLATE utf8_general_ci;`);
         return {
             result: { rows, fields }
         }
