@@ -3,5 +3,28 @@
     "lodash": "^4.17.21",
     "moment-timezone": "^0.5.41",
     "mysql2": "^3.1.2"
-  }
+  },
+  "name": "treerds",
+  "version": "1.0.0",
+  "description": "for aws rds / mysql connection ",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/david-marstree/treeRDS.git"
+  },
+  "keywords": [
+    "aws",
+    "rds",
+    "mysql"
+  ],
+  "author": "David MARStree",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/david-marstree/treeRDS/issues"
+  },
+  "homepage": "https://github.com/david-marstree/treeRDS#readme"
 }
