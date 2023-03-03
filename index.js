@@ -293,7 +293,7 @@ const add = async (conn, tableName, values) => {
     }
 
     // find primary key and make sure filterValues[primaryKey] = 0;
-    const [rows] = conn.execute(`SHOW KEYS FROM \`${tableName}\` WHERE Key_name = 'PRIMARY'`);
+    const [rows] = await conn.execute(`SHOW KEYS FROM \`${tableName}\` WHERE Key_name = 'PRIMARY'`);
     const primaryKey = _.first(rows)?.Column_name || 'id';
     filterValues[primaryKey] = (filterValues && filterValues[primaryKey]) ? filterValues[primaryKey] : 0;
 
