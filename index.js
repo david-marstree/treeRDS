@@ -305,7 +305,9 @@ const add = async (conn, tableName, values) => {
 
     // query database
     try {
-        const { insertId } = await conn.query(sqlcmd, finalValues);
+        const result = await conn.query(sqlcmd, finalValues);
+        console.log('result: ', result);
+        const { insertId } = result;
         return await getOne(conn, tableName, { id: insertId });
     } catch (error) {
         console.log(error);
