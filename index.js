@@ -305,8 +305,7 @@ const add = async (conn, tableName, values) => {
 
     // query database
     try {
-        const result = await conn.query(sqlcmd, finalValues);
-        console.log('result: ', result);
+        const [result, fields] = await conn.query(sqlcmd, finalValues);
         const { insertId } = result;
         return await getOne(conn, tableName, { id: insertId });
     } catch (error) {
@@ -386,7 +385,10 @@ const edit = async (conn, tableName, conditions, values) => {
     if (!filterValues?.updated_at) {
         filterValues.updated_at = moment((new Date()).getTime()).tz("Asia/Hong_Kong").format('X');
     }
+    // get origin data
+    const originList = await get(conn, tableName, conditions);
 
+    // prepare sql for update 
     const conditionString = _
         .clain(conditions)
         .keys()
@@ -411,8 +413,11 @@ const edit = async (conn, tableName, conditions, values) => {
 
     try {
         // query database
-        const { affectedRows } = await conn.query(sqlcmd, finalValues);
-        return affectedRows;
+        const [result, fields] = await conn.query(sqlcmd, finalValues);
+
+        const ps = _.map(originList, (data) => getOne(conn, tableName, { id: data.id }));
+        const resp = await Promise.all(ps);
+        return resp;
     } catch (error) {
         console.log(error);
         return false
