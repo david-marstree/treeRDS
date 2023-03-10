@@ -460,6 +460,38 @@ const remove = async (conn, tableName, conditions) => {
 }
 
 
+/**
+ * @access public
+ * @abstract begin a transaction
+ * @param {*} conn MySQLConnection
+ * @returns void 
+ */
+const transaction = async (conn) => {
+    await conn.execute('SET TRANSACTION ISOLATION LEVEL READ COMMITTED');
+    await conn.beginTransaction();
+}
+
+
+/**
+ * @access public
+ * @abstract commit transaction
+ * @params {*} conn MySQLConnection
+ * @returns voids
+ */
+const commit = async (conn) => {
+    await conn.commit();
+}
+
+
+/**
+ * @access public
+ * @abstract rollback transaction
+ * @params {*} conn MySQLConnection
+ * @returns voids
+ */
+const rollback = async (conn) => {
+    await conn.rollback();
+}
 
 
 module.exports = {
@@ -475,5 +507,8 @@ module.exports = {
     add,
     batchAdd,
     edit,
-    remove
+    remove,
+    transaction,
+    commit,
+    rollback
 }
