@@ -390,14 +390,14 @@ const edit = async (conn, tableName, conditions, values) => {
 
     // prepare sql for update 
     const conditionString = _
-        .clain(conditions)
+        .chain(conditions)
         .keys()
         .map((key) => `\`${key}\` = ?`)
         .value()
         .join(' AND ');
 
     const setString = _
-        .clain(filterValues)
+        .chain(filterValues)
         .keys()
         .map((key) => `\`${key}\` = ?`)
         .value()
