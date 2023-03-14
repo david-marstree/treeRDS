@@ -241,7 +241,7 @@ const generateCode = async (conn, tableName, condition, key = 'code', length = 4
     let code, increment = 0;
     // if prevResult exist
     if (prevResult && prevResult[key]) {
-        const r = new RegExp("^" + prefix + "([0-9]+)" + (subfix ? subfix : '') + "$", i);
+        const r = new RegExp("^" + prefix + "([0-9]+)" + (subfix ? subfix : '') + "$", 'i');
         const m = r.exec(prevResult[key]);
         increment = +m[1];
     }
