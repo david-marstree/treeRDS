@@ -462,7 +462,7 @@ exports.condition2SQL = (tableName, values) => {
     }
 
     // set order_by
-    const { statement: orderStatement } = _prepareGroup({ tableName, group_by });
+    const { statement: orderStatement } = _prepareOrder({ tableName, order_by });
     if (orderStatement && orderStatement.length > 0) {
         statement += ` ORDER BY ${orderStatement}`;
     }
