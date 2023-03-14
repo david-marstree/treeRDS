@@ -154,6 +154,7 @@ const get = async (conn, tableName, condition) => {
     // query database
     try {
         // query database
+        console.info('sql cmd:', sqlcmd);
         const [rows, fields] = await conn.query(sqlcmd, conditionObj.param);
         return rows;
     } catch (error) {
