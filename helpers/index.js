@@ -274,8 +274,15 @@ const _prepareWhere = ({ tableName, query, param = [], statement = '' }) => {
                 if (k === 'le' || k === 'lte') statement += `${_getKeyAlias(tableName, key)} <= ?`;
                 if (k === 'lt') statement += `${_getKeyAlias(tableName, key)} < ?`;
                 if (k === 'like') statement += `${_getKeyAlias(tableName, key)} like ?`;
+                if (k === 'like_before') statement += `${_getKeyAlias(tableName, key)} like ?`;
+                if (k === 'like_after') statement += `${_getKeyAlias(tableName, key)} like ?`;
+
                 if (k === 'like') {
                     param.push(`%${v}%`);
+                } else if (k === 'like_before') {
+                    param.push(`${v}%`);
+                } else if (k === 'like_after') {
+                    param.push(`%${v}`);
                 } else {
                     param.push(v);
                 }

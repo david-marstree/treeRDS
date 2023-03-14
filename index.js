@@ -215,6 +215,49 @@ const getSearch = async (conn, tableName, condition) => {
     return result;
 }
 
+/**
+ * @abstract get table increment code 
+ * @param {*} conn MySQLConnection
+ * @param {*} tableName string
+ * @param {*} condition mixed
+ * @return {*} {data, is_more, offset, limit, total}
+ */
+const generateCode = async (conn, tableName, condition, key = 'code', length = 4) => {
+    // set Prefix and subfix default
+    const prefix = (condition && condition[key] && condition[key]?.like_before) ? condition[key].like_before : moment((new Date()).getTime()).tz("Asia/Hong_Kong").format('YYMM');
+    const subfix = (condition && condition[key] && condition[key]?.like_after) ? condition[key].like_after : undefined;
+
+    // get Max Key current accroding conditon
+    let query = {
+        ...condition,
+        field: key,
+        sort: 'desc'
+    };
+    query[key] = { like_before: prefix };
+    if (subfix) query[key].like_after = subfix;
+    const prevResult = await getOne(conn, tableName, query);
+
+    // define new code
+    let code, increment = 0;
+    // if prevResult exist
+    if (prevResult && prevResult[key]) {
+        const r = new RegExp("^" + prefix + "([0-9]+)" + (subfix ? subfix : '') + "$", i);
+        const m = r.exec(prevResult[key]);
+        increment = +m[1];
+    }
+
+    //check code is exists
+    do {
+        increment += 1;
+        code = prefix + String(increment).padStart(length, '0') + (subfix ? subfix : '');
+        const checkQuery = {};
+        checkQuery[key] = code;
+        const check = await getOne(conn, tableName, checkQuery);
+    } while (check && check[key]);
+
+    return code;
+
+}
 
 
 /**
@@ -501,6 +544,7 @@ module.exports = {
     createTable,
     alterTable,
     get,
+    generateCode,
     getSearch,
     count,
     getOne,
