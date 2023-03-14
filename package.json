@@ -5,7 +5,7 @@
     "mysql2": "^3.1.2"
   },
   "name": "treerds",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "for aws rds / mysql connection ",
   "main": "index.js",
   "devDependencies": {},

@@ -247,12 +247,13 @@ const generateCode = async (conn, tableName, condition, key = 'code', length = 4
     }
 
     //check code is exists
+    let check;
     do {
         increment += 1;
         code = prefix + String(increment).padStart(length, '0') + (subfix ? subfix : '');
         const checkQuery = {};
         checkQuery[key] = code;
-        const check = await getOne(conn, tableName, checkQuery);
+        check = await getOne(conn, tableName, checkQuery);
     } while (check && check[key]);
 
     return code;
