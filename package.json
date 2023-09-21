@@ -1,32 +1,38 @@
 {
-  "dependencies": {
-    "lodash": "^4.17.21",
-    "moment-timezone": "^0.5.41",
-    "mysql2": "^3.1.2"
-  },
-  "name": "treerds",
-  "version": "1.0.11",
-  "description": "for aws rds / mysql connection ",
-  "main": "index.js",
-  "devDependencies": {
-    "jest": "^29.5.0"
-  },
-  "scripts": {
-    "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/david-marstree/treeRDS.git"
-  },
-  "keywords": [
-    "aws",
-    "rds",
-    "mysql"
-  ],
-  "author": "David MARStree",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/david-marstree/treeRDS/issues"
-  },
-  "homepage": "https://github.com/david-marstree/treeRDS#readme"
+    "name": "treerds",
+    "version": "1.0.12",
+    "description": "for aws rds / mysql connection ",
+    "main": "lib/cjs/index.js",
+    "module": "lib/esm/index.js",
+    "types": "lib/esm/index.d.ts",
+    "dependencies": {
+        "lodash": "^4.17.21",
+        "moment-timezone": "^0.5.41",
+        "mysql2": "^3.1.2"
+    },
+    "devDependencies": {
+        "@tsconfig/node-lts": "^18.12.5",
+        "@types/lodash": "^4.14.198",
+        "@types/node": "^20.6.3",
+        "jest": "^29.5.0"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "tsc && tsc -p tsconfig-cjs.json"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/david-marstree/treeRDS.git"
+    },
+    "keywords": [
+        "aws",
+        "rds",
+        "mysql"
+    ],
+    "author": "David MARStree",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/david-marstree/treeRDS/issues"
+    },
+    "homepage": "https://github.com/david-marstree/treeRDS#readme"
 }
