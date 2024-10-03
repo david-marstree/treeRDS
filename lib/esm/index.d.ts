@@ -12,15 +12,12 @@ export declare const connect: (config?: ConnectProps) => Promise<Connection | un
 /**
  * @access public
  * @abstract end connection to MySQL
- * @param {*} config config for database connection
  * @returns void
  */
 export declare const disconnect: (conn: Connection) => Promise<void>;
 /**
  * @access public
  * @abstract create database in MySQL
- * @param {*} conn MySQLConnection
- * @param {*} databaseName string
  * @returns {result: {rows, fields} }
  */
 export type CreateDatabaseResult = {
@@ -30,13 +27,13 @@ export type CreateDatabaseResult = {
     };
     error?: any;
 };
-export declare const createDatabase: (conn: Connection, databaseName: string) => Promise<CreateDatabaseResult>;
+export declare const createDatabase: ({ conn, databaseName, }: {
+    conn: Connection;
+    databaseName: string;
+}) => Promise<CreateDatabaseResult>;
 /**
  * @access public
  * @abstract create table in Company Database
- * @param {*} conn MySQLConnection
- * @param {*} tableName string
- * @param {*} schema mixed
  * @returns {result: {rows, fields}}
  */
 export type CreateTableResult = {
@@ -46,13 +43,14 @@ export type CreateTableResult = {
     };
     error?: any;
 };
-export declare const createTable: (conn: Connection, tableName: string, schema: Schema) => Promise<CreateTableResult>;
+export declare const createTable: ({ conn, tableName, schema, }: {
+    conn: Connection;
+    tableName: string;
+    schema: Schema;
+}) => Promise<CreateTableResult>;
 /**
  * @access public
  * @abstract alter table in Company Database
- * @param {*} conn MySQLConnection
- * @param {*} tableName string
- * @param {*} schema mixed
  * @returns {result: {rows, fields}}
  */
 export type AlterTableResult = {
@@ -62,28 +60,31 @@ export type AlterTableResult = {
     };
     error?: any;
 };
-export declare const alterTable: (conn: Connection, tableName: string, schema: Schema) => Promise<AlterTableResult>;
+export declare const alterTable: ({ conn, tableName, schema, }: {
+    conn: Connection;
+    tableName: string;
+    schema: Schema;
+}) => Promise<AlterTableResult>;
 /**
  * @abstract select table in Company Database
- * @param {*} conn MySQLConnection
- * @param {*} tableName string
- * @param {*} condition mixed
  * @returns {*} array
  */
-export declare const get: (conn: Connection, tableName: string, condition: ConditionValues) => Promise<RowDataPacket[] | false>;
+export declare const get: ({ conn, tableName, condition, }: {
+    conn: Connection;
+    tableName: string;
+    condition?: ConditionValues | undefined;
+}) => Promise<RowDataPacket[] | false>;
 /**
  * @abstract select table in Company Database
- * @param {*} conn MySQLConnection
- * @param {*} tableName string
- * @param {*} condition mixed
  * @returns {*} object
  */
-export declare const getOne: (conn: Connection, tableName: string, condition: ConditionValues) => Promise<RowDataPacket | false>;
+export declare const getOne: ({ conn, tableName, condition, }: {
+    conn: Connection;
+    tableName: string;
+    condition?: ConditionValues | undefined;
+}) => Promise<RowDataPacket | false>;
 /**
  * @abstract select table in search Database
- * @param {*} conn MySQLConnection
- * @param {*} tableName string
- * @param {*} condition mixed
  * @return {*} {data, is_more, offset, limit, total}
  */
 export type GetSearchResult = {
@@ -94,51 +95,62 @@ export type GetSearchResult = {
     total?: number;
     last_id: number | string | null;
 };
-export declare const getSearch: (conn: Connection, tableName: string, condition: ConditionValues) => Promise<GetSearchResult>;
+export declare const getSearch: ({ conn, tableName, condition, }: {
+    conn: Connection;
+    tableName: string;
+    condition?: ConditionValues | undefined;
+}) => Promise<GetSearchResult>;
 /**
  * @abstract get table increment code
- * @param {*} conn MySQLConnection
- * @param {*} tableName string
- * @param {*} condition mixed
  * @return {*} {data, is_more, offset, limit, total}
  */
-export declare const generateCode: (conn: Connection, tableName: string, condition: ConditionValues, key?: string, length?: number) => Promise<string>;
+export declare const generateCode: ({ conn, tableName, condition, key, length, }: {
+    conn: Connection;
+    tableName: string;
+    condition: ConditionValues;
+    key?: string | undefined;
+    length?: number | undefined;
+}) => Promise<string>;
 /**
  * @abstract count table in Company Database
- * @param {*} conn MySQLConnection
- * @param {*} tableName string
- * @param {*} condition mixed
  * @returns {*} array
  */
-export declare const count: (conn: Connection, tableName: string, condition: ConditionValues) => Promise<any | false>;
+export declare const count: ({ conn, tableName, condition, }: {
+    conn: Connection;
+    tableName: string;
+    condition?: ConditionValues | undefined;
+}) => Promise<any | false>;
 /**
  * @access public
  * @abstract insert value into table in Company Database
- * @param {*} conn MySQLConnection
- * @param {*} tableName string
- * @param {*} values object
  * @returns {result: {rows, fields}}
  */
-export declare const add: (conn: Connection, tableName: string, values: InsertData) => Promise<RowDataPacket | false>;
+export declare const add: ({ conn, tableName, values, }: {
+    conn: Connection;
+    tableName: string;
+    values: InsertData;
+}) => Promise<RowDataPacket | false>;
 /**
  * @access public
  * @abstract batch insert values into table in Company Database
- * @param {*} conn MySQLConnection
- * @param {*} tableName string
- * @param {*} multipleValues array
  * @returns {result: {rows, fields}}
  */
-export declare const batchAdd: (conn: Connection, tableName: string, multipleValues: InsertData[]) => Promise<(RowDataPacket | false)[] | false>;
+export declare const batchAdd: ({ conn, tableName, multipleValues, }: {
+    conn: Connection;
+    tableName: string;
+    multipleValues: InsertData[];
+}) => Promise<(RowDataPacket | false)[] | false>;
 /**
  * @access public
  * @abstract update value into table in Company Database
- * @param {*} conn MySQLConnection
- * @param {*} tableName string
- * @param {*} conditions object
- * @param {*} values object
  * @returns {result: {rows, fields}}
  */
-export declare const edit: (conn: Connection, tableName: string, conditions: ConditionValues, values: UpdateData) => Promise<(RowDataPacket | false)[] | false>;
+export declare const edit: ({ conn, tableName, condition, values, }: {
+    conn: Connection;
+    tableName: string;
+    condition: ConditionValues;
+    values: UpdateData;
+}) => Promise<(RowDataPacket | false)[] | false>;
 /**
  * @access public
  * @abstract delete value into table in Company Database
@@ -172,17 +184,63 @@ export declare const rollback: (conn: Connection) => Promise<void>;
 declare const _default: {
     connect: (config?: mysql.ConnectionOptions) => Promise<mysql.Connection | undefined>;
     disconnect: (conn: mysql.Connection) => Promise<void>;
-    createDatabase: (conn: mysql.Connection, databaseName: string) => Promise<CreateDatabaseResult>;
-    createTable: (conn: mysql.Connection, tableName: string, schema: Schema) => Promise<CreateTableResult>;
-    alterTable: (conn: mysql.Connection, tableName: string, schema: Schema) => Promise<AlterTableResult>;
-    get: (conn: mysql.Connection, tableName: string, condition: ConditionValues) => Promise<false | mysql.RowDataPacket[]>;
-    generateCode: (conn: mysql.Connection, tableName: string, condition: ConditionValues, key?: string, length?: number) => Promise<string>;
-    getSearch: (conn: mysql.Connection, tableName: string, condition: ConditionValues) => Promise<GetSearchResult>;
-    count: (conn: mysql.Connection, tableName: string, condition: ConditionValues) => Promise<any>;
-    getOne: (conn: mysql.Connection, tableName: string, condition: ConditionValues) => Promise<false | mysql.RowDataPacket>;
-    add: (conn: mysql.Connection, tableName: string, values: import("./helpers/index").WhereQuery) => Promise<false | mysql.RowDataPacket>;
-    batchAdd: (conn: mysql.Connection, tableName: string, multipleValues: import("./helpers/index").WhereQuery[]) => Promise<false | (false | mysql.RowDataPacket)[]>;
-    edit: (conn: mysql.Connection, tableName: string, conditions: ConditionValues, values: import("./helpers/index").WhereQuery) => Promise<false | (false | mysql.RowDataPacket)[]>;
+    createDatabase: ({ conn, databaseName, }: {
+        conn: mysql.Connection;
+        databaseName: string;
+    }) => Promise<CreateDatabaseResult>;
+    createTable: ({ conn, tableName, schema, }: {
+        conn: mysql.Connection;
+        tableName: string;
+        schema: Schema;
+    }) => Promise<CreateTableResult>;
+    alterTable: ({ conn, tableName, schema, }: {
+        conn: mysql.Connection;
+        tableName: string;
+        schema: Schema;
+    }) => Promise<AlterTableResult>;
+    get: ({ conn, tableName, condition, }: {
+        conn: mysql.Connection;
+        tableName: string;
+        condition?: ConditionValues | undefined;
+    }) => Promise<false | mysql.RowDataPacket[]>;
+    generateCode: ({ conn, tableName, condition, key, length, }: {
+        conn: mysql.Connection;
+        tableName: string;
+        condition: ConditionValues;
+        key?: string | undefined;
+        length?: number | undefined;
+    }) => Promise<string>;
+    getSearch: ({ conn, tableName, condition, }: {
+        conn: mysql.Connection;
+        tableName: string;
+        condition?: ConditionValues | undefined;
+    }) => Promise<GetSearchResult>;
+    count: ({ conn, tableName, condition, }: {
+        conn: mysql.Connection;
+        tableName: string;
+        condition?: ConditionValues | undefined;
+    }) => Promise<any>;
+    getOne: ({ conn, tableName, condition, }: {
+        conn: mysql.Connection;
+        tableName: string;
+        condition?: ConditionValues | undefined;
+    }) => Promise<false | mysql.RowDataPacket>;
+    add: ({ conn, tableName, values, }: {
+        conn: mysql.Connection;
+        tableName: string;
+        values: import("./helpers/query").WhereQuery;
+    }) => Promise<false | mysql.RowDataPacket>;
+    batchAdd: ({ conn, tableName, multipleValues, }: {
+        conn: mysql.Connection;
+        tableName: string;
+        multipleValues: import("./helpers/query").WhereQuery[];
+    }) => Promise<false | (false | mysql.RowDataPacket)[]>;
+    edit: ({ conn, tableName, condition, values, }: {
+        conn: mysql.Connection;
+        tableName: string;
+        condition: ConditionValues;
+        values: import("./helpers/query").WhereQuery;
+    }) => Promise<false | (false | mysql.RowDataPacket)[]>;
     remove: (conn: mysql.Connection, tableName: string, conditions: ConditionValues) => Promise<number | false>;
     transaction: (conn: mysql.Connection) => Promise<void>;
     commit: (conn: mysql.Connection) => Promise<void>;
