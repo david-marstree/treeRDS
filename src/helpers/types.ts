@@ -3,16 +3,11 @@ export type MySQLIndex = {
   [key: string]: string[] | string | undefined;
 };
 
-export enum MySQLFieldType {
-  INT = "int",
-  VARCHAR = "varchar",
-  LONGTEXT = "longtext",
-  DOUBLE = "double",
-}
+export type MySQLFieldType = "int" | "varchar" | "longtext" | "double";
 
 export type MySQLField = {
   name: string;
-  type: MySQLFieldType;
+  type: "int" | "varchar" | "longtext" | "double";
   primaryKey?: boolean;
   defaultValue?: any;
   index?: string[];
@@ -20,4 +15,4 @@ export type MySQLField = {
   error?: string;
 };
 
-export type Schema = MySQLField[];
+export type Schema = Omit<MySQLField, "sqlcmd" | "error">[];

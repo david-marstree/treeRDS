@@ -33,7 +33,7 @@ export const field = ({
 export const primaryKey = ({ name }: { name: string }): MySQLField =>
   field({
     name,
-    type: MySQLFieldType.INT,
+    type: "int",
     primaryKey: true,
     defaultValue: 0,
     index: [name],
@@ -52,8 +52,7 @@ export const intField = ({
   name: string;
   defaultValue?: number;
   index?: string[];
-}): MySQLField =>
-  field({ name, type: MySQLFieldType.INT, defaultValue, index });
+}): MySQLField => field({ name, type: "int", defaultValue, index });
 
 /**
  * @abstract define varchar field for table in database
@@ -67,8 +66,7 @@ export const varcharField = ({
   name: string;
   defaultValue?: string | number | null;
   index?: string[];
-}): MySQLField =>
-  field({ name, type: MySQLFieldType.VARCHAR, defaultValue, index });
+}): MySQLField => field({ name, type: "varchar", defaultValue, index });
 
 /**
  * @abstract define longtext field for table in database
@@ -76,7 +74,7 @@ export const varcharField = ({
  * @returns fieldObject
  */
 export const longtextField = ({ name }: { name: string }) =>
-  field({ name, type: MySQLFieldType.LONGTEXT });
+  field({ name, type: "longtext" });
 
 /**
  * @abstract define double field for table in database
@@ -90,8 +88,7 @@ export const doubleField = ({
   name: string;
   defaultValue: number;
   index?: string[];
-}): MySQLField =>
-  field({ name, type: MySQLFieldType.DOUBLE, defaultValue, index });
+}): MySQLField => field({ name, type: "double", defaultValue, index });
 
 /**
  * @access public
@@ -107,20 +104,22 @@ export const schema2SQL = (
   let indexes: MySQLIndex = { primaryKey: "" };
 
   //prepare schemaSQL
-  let schemaSQL = _.map(schema, (curr) => {
+  let schemaSQL: MySQLField[] = _.map(schema, (curr) => {
     // prepare schemaSQL for each field
-    curr.sqlcmd = getFieldSQL(curr);
+    const sqlcmd = getFieldSQL(curr);
 
     // check curr.sqlcmd is not true
-    if (!!!curr.sqlcmd) {
-      curr.error = `Database is not support the type of field \`${curr.name}\` Type:  ${curr.type} `;
-      return curr;
+    if (!!!sqlcmd) {
+      return {
+        ...curr,
+        error: `Database is not support the type of field \`${curr.name}\` Type:  ${curr.type} `,
+      };
     }
 
     //prepare Indexes
     indexes = _setIndexes(indexes, curr);
 
-    return curr;
+    return { ...curr, sqlcmd };
   });
   const primaryKey = indexes.primaryKey;
   if (indexes?.primaryKey) delete indexes.primaryKey;
@@ -158,13 +157,13 @@ export const schema2SQL = (
  * @returns MySQLFieldType string
  */
 const _getType = (field: MySQLField): string | false => {
-  if (field.type === MySQLFieldType.INT) {
+  if (field.type === "int") {
     return "int(11)";
-  } else if (field.type === MySQLFieldType.VARCHAR) {
+  } else if (field.type === "varchar") {
     return "varchar(255)";
-  } else if (field.type == MySQLFieldType.LONGTEXT) {
+  } else if (field.type == "longtext") {
     return "longtext";
-  } else if (field.type === MySQLFieldType.DOUBLE) {
+  } else if (field.type === "double") {
     return "double";
   }
   return false;
