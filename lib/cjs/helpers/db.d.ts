@@ -7,9 +7,9 @@ import { MySQLField, MySQLFieldType, Schema } from "./types";
 export declare const field: ({ name, type, primaryKey, defaultValue, index, }: {
     name: string;
     type: MySQLFieldType;
-    primaryKey?: boolean | undefined;
-    defaultValue?: string | number | null | undefined;
-    index?: string[] | undefined;
+    primaryKey?: boolean;
+    defaultValue?: string | number | null;
+    index?: string[];
 }) => MySQLField;
 /**
  * @abstract define primary key for table in database
@@ -24,8 +24,8 @@ export declare const primaryKey: ({ name }: {
  */
 export declare const intField: ({ name, defaultValue, index, }: {
     name: string;
-    defaultValue?: number | undefined;
-    index?: string[] | undefined;
+    defaultValue?: number;
+    index?: string[];
 }) => MySQLField;
 /**
  * @abstract define varchar field for table in database
@@ -33,8 +33,8 @@ export declare const intField: ({ name, defaultValue, index, }: {
  */
 export declare const varcharField: ({ name, defaultValue, index, }: {
     name: string;
-    defaultValue?: string | number | null | undefined;
-    index?: string[] | undefined;
+    defaultValue?: string | number | null;
+    index?: string[];
 }) => MySQLField;
 /**
  * @abstract define longtext field for table in database
@@ -51,7 +51,7 @@ export declare const longtextField: ({ name }: {
 export declare const doubleField: ({ name, defaultValue, index, }: {
     name: string;
     defaultValue: number;
-    index?: string[] | undefined;
+    index?: string[];
 }) => MySQLField;
 /**
  * @access public

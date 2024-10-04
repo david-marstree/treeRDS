@@ -1,10 +1,13 @@
 {
   "name": "treerds",
-  "version": "1.0.14",
+  "version": "1.0.16",
   "description": "for aws rds / mysql connection ",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
   "types": "lib/esm/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "peerDependencies": {
     "lodash": "^4.17.21",
     "moment-timezone": "^0.5.45",

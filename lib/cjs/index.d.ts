@@ -1,4 +1,4 @@
-import mysql, { Connection, ConnectionOptions, RowDataPacket, FieldPacket } from "mysql2/promise";
+import { Connection, ConnectionOptions, RowDataPacket, FieldPacket } from "mysql2/promise";
 import { ConditionValues, InsertData, UpdateData } from "./helpers/index";
 import type { Schema } from "./helpers/index";
 /**
@@ -72,7 +72,7 @@ export declare const alterTable: ({ conn, tableName, schema, }: {
 export declare const get: ({ conn, tableName, condition, }: {
     conn: Connection;
     tableName: string;
-    condition?: ConditionValues | undefined;
+    condition?: ConditionValues;
 }) => Promise<RowDataPacket[] | false>;
 /**
  * @abstract select table in Company Database
@@ -81,7 +81,7 @@ export declare const get: ({ conn, tableName, condition, }: {
 export declare const getOne: ({ conn, tableName, condition, }: {
     conn: Connection;
     tableName: string;
-    condition?: ConditionValues | undefined;
+    condition?: ConditionValues;
 }) => Promise<RowDataPacket | false>;
 /**
  * @abstract select table in search Database
@@ -98,7 +98,7 @@ export type GetSearchResult = {
 export declare const getSearch: ({ conn, tableName, condition, }: {
     conn: Connection;
     tableName: string;
-    condition?: ConditionValues | undefined;
+    condition?: ConditionValues;
 }) => Promise<GetSearchResult>;
 /**
  * @abstract get table increment code
@@ -108,8 +108,8 @@ export declare const generateCode: ({ conn, tableName, condition, key, length, }
     conn: Connection;
     tableName: string;
     condition: ConditionValues;
-    key?: string | undefined;
-    length?: number | undefined;
+    key?: string;
+    length?: number;
 }) => Promise<string>;
 /**
  * @abstract count table in Company Database
@@ -118,7 +118,7 @@ export declare const generateCode: ({ conn, tableName, condition, key, length, }
 export declare const count: ({ conn, tableName, condition, }: {
     conn: Connection;
     tableName: string;
-    condition?: ConditionValues | undefined;
+    condition?: ConditionValues;
 }) => Promise<any | false>;
 /**
  * @access public
@@ -182,69 +182,69 @@ export declare const commit: (conn: Connection) => Promise<void>;
  */
 export declare const rollback: (conn: Connection) => Promise<void>;
 declare const _default: {
-    connect: (config?: mysql.ConnectionOptions) => Promise<mysql.Connection | undefined>;
-    disconnect: (conn: mysql.Connection) => Promise<void>;
+    connect: (config?: ConnectProps) => Promise<Connection | undefined>;
+    disconnect: (conn: Connection) => Promise<void>;
     createDatabase: ({ conn, databaseName, }: {
-        conn: mysql.Connection;
+        conn: Connection;
         databaseName: string;
     }) => Promise<CreateDatabaseResult>;
     createTable: ({ conn, tableName, schema, }: {
-        conn: mysql.Connection;
+        conn: Connection;
         tableName: string;
         schema: Schema;
     }) => Promise<CreateTableResult>;
     alterTable: ({ conn, tableName, schema, }: {
-        conn: mysql.Connection;
+        conn: Connection;
         tableName: string;
         schema: Schema;
     }) => Promise<AlterTableResult>;
     get: ({ conn, tableName, condition, }: {
-        conn: mysql.Connection;
+        conn: Connection;
         tableName: string;
-        condition?: ConditionValues | undefined;
-    }) => Promise<false | mysql.RowDataPacket[]>;
+        condition?: ConditionValues;
+    }) => Promise<RowDataPacket[] | false>;
     generateCode: ({ conn, tableName, condition, key, length, }: {
-        conn: mysql.Connection;
+        conn: Connection;
         tableName: string;
         condition: ConditionValues;
-        key?: string | undefined;
-        length?: number | undefined;
+        key?: string;
+        length?: number;
     }) => Promise<string>;
     getSearch: ({ conn, tableName, condition, }: {
-        conn: mysql.Connection;
+        conn: Connection;
         tableName: string;
-        condition?: ConditionValues | undefined;
+        condition?: ConditionValues;
     }) => Promise<GetSearchResult>;
     count: ({ conn, tableName, condition, }: {
-        conn: mysql.Connection;
+        conn: Connection;
         tableName: string;
-        condition?: ConditionValues | undefined;
-    }) => Promise<any>;
+        condition?: ConditionValues;
+    }) => Promise<any | false>;
     getOne: ({ conn, tableName, condition, }: {
-        conn: mysql.Connection;
+        conn: Connection;
         tableName: string;
-        condition?: ConditionValues | undefined;
-    }) => Promise<false | mysql.RowDataPacket>;
+        condition?: ConditionValues;
+    }) => Promise<RowDataPacket | false>;
     add: ({ conn, tableName, values, }: {
-        conn: mysql.Connection;
+        conn: Connection;
         tableName: string;
-        values: import("./helpers/query").WhereQuery;
-    }) => Promise<false | mysql.RowDataPacket>;
+        values: InsertData;
+    }) => Promise<RowDataPacket | false>;
     batchAdd: ({ conn, tableName, multipleValues, }: {
-        conn: mysql.Connection;
+        conn: Connection;
         tableName: string;
-        multipleValues: import("./helpers/query").WhereQuery[];
-    }) => Promise<false | (false | mysql.RowDataPacket)[]>;
+        multipleValues: InsertData[];
+    }) => Promise<(RowDataPacket | false)[] | false>;
     edit: ({ conn, tableName, condition, values, }: {
-        conn: mysql.Connection;
+        conn: Connection;
         tableName: string;
         condition: ConditionValues;
-        values: import("./helpers/query").WhereQuery;
-    }) => Promise<false | (false | mysql.RowDataPacket)[]>;
-    remove: (conn: mysql.Connection, tableName: string, conditions: ConditionValues) => Promise<number | false>;
-    transaction: (conn: mysql.Connection) => Promise<void>;
-    commit: (conn: mysql.Connection) => Promise<void>;
-    rollback: (conn: mysql.Connection) => Promise<void>;
+        values: UpdateData;
+    }) => Promise<(RowDataPacket | false)[] | false>;
+    remove: (conn: Connection, tableName: string, conditions: ConditionValues) => Promise<number | false>;
+    transaction: (conn: Connection) => Promise<void>;
+    commit: (conn: Connection) => Promise<void>;
+    rollback: (conn: Connection) => Promise<void>;
 };
 export default _default;
 //# sourceMappingURL=index.d.ts.map
